@@ -3,7 +3,15 @@
     <router-view/>
   </div>
 </template>
-
+<script>
+  export default {
+    data() {
+      return {
+        active: 'home',
+      };
+    },
+  };
+</script>
 <style>
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -59,6 +59,7 @@
 
 <script>
     import {
+        Dialog,
         Tag,
         Col,
         Icon,
@@ -72,6 +73,7 @@
     } from 'vant';
     export default {
         components: {
+            Dialog,
             [Tag.name]: Tag,
             [Col.name]: Col,
             [Icon.name]: Icon,
@@ -92,18 +94,18 @@
         data() {
             return {
                 data:{
-                    orderId: "1586242977480760998",
-                    buyerName: "小明",
-                    phoneName: "Honor 8A",
-                    payStatus: 1,
-                    freight: 10,
-                    tel: "13636363636",
-                    address: "浙江省杭州市江干区789号",
-                    num: 1,
-                    specs: "32GB",
-                    price: "2800.00.00",
-                    icon: "../static/e84a2e03-7f19-41d2-98a5-a5c16b7e252d.jpg",
-                    amount: 2800
+                    "orderId": "1591444530567676377",
+                    "buyerName": "张三",
+                    "tel": "17777777777",
+                    "address": "北京市北京市东城区123街123号",
+                    "num": 1,
+                    "bookName": "Python编程 从入门到实践",
+                    "specs": "【单件】Python编程 从入门到实践",
+                    "price": "65.00",
+                    "icon": "../images/f7ceacb6-bafe-453f-aeb2-c678bc11d6d0.jpg",
+                    "amount": 75.0,
+                    "payStatus": 1,
+                    "freight": 10
                 }
             };
         },

@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <van-address-list
                 v-model="chosenAddressId"
                 :list="list"
@@ -7,12 +8,16 @@
                 @add="onAdd"
                 @edit="onEdit"
                 @select="onselect"
-        />
+
+        >
+        </van-address-list>
+
     </div>
 </template>
 
 <script>
-    import { Toast } from 'vant';
+    import { Dialog} from 'vant';
+
     export default {
         data() {
             return {
@@ -20,7 +25,7 @@
                 list: ''
             }
         },
-        created(){
+        created() {
             const _this = this
             axios.get('http://localhost:8181/address/list').then(function (resp) {
                 _this.list = resp.data.data
@@ -32,9 +37,9 @@
             },
             onEdit(item) {
                 let data = JSON.stringify(item)
-                this.$router.push({path:'/addressEdit',query:{item:data}})
+                this.$router.push({path: '/addressEdit', query: {item: data}})
             },
-            onselect(item){
+            onselect(item) {
                 let orderForm = {
                     name: item.name,
                     tel: item.tel,
@@ -42,17 +47,38 @@
                     specsId: this.$store.state.specsId,
                     quantity: this.$store.state.quantity
                 }
-                const _this = this
-                axios.post('http://localhost:8181/order/create',orderForm).then(function (resp) {
-                    if(resp.data.code == 2001){
-                        let instance = Toast('下单成功');
-                        setTimeout(() => {
-                            instance.close();
-                            _this.$router.push('/detail?orderId='+resp.data.data.orderId)
-                        }, 1000)
-                    }
+                const _this = this;
+                Dialog.confirm({
+                    title: '创建订单',
+                    message: '使用当前信息创建订单',
+                }).then(() => {
+                    console.log(orderForm);
+                    axios.post('http://localhost:8181/order/create', orderForm).then(function (resp) {
+                        if (resp.data.code === 2001) {
+                            setTimeout(() => {
+                                _this.$router.push('/detail?orderId=' + resp.data.data.orderId)
+                            }, 1000)
+                        }
+                    })
                 })
-            }
+                    .catch(() => {
+                        // on cancel
+                    });
+
+
+                /*   axios.post('http://localhost:8181/order/create',orderForm).then(function (resp) {
+                       if(resp.data.code == 2001){
+                           let instance = Toast('下单成功');
+                           setTimeout(() => {
+                               instance.close();
+                               _this.$router.push('/detail?orderId='+resp.data.data.orderId)
+                           }, 1000)
+                       }
+                   })*/
+            },
+            components: {
+                [Dialog.Component.name]: Dialog.Component,
+            },
         }
     }
 </script>

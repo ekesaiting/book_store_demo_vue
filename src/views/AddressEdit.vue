@@ -31,7 +31,7 @@
             onSave(item) {
                 const _this = this
                 axios.put('http://localhost:8181/address/update',item).then(function (resp) {
-                    if(resp.data.code == 2003){
+                    if(resp.data.code === 2003){
                         let instance = Toast('修改成功');
                         setTimeout(() => {
                             instance.close()
@@ -42,6 +42,16 @@
 
             },
             onDelete() {
+                console.log(this.addressInfo.id)
+                axios.delete("http://localhost:8181/address/delete/"+this.addressInfo.id).then(resp=>{
+                    if(resp.data.code === 2002){
+                        let instance = Toast('删除成功');
+                        setTimeout(() => {
+                            instance.close()
+                            _this.$router.push('/addressList')
+                        }, 1000)
+                    }
+                })
                 history.go(-1)
             }
         }

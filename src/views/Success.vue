@@ -13,6 +13,8 @@
             </van-cell>
         </van-cell-group>
         <van-button type="primary" size="large" @click="showInfo">查看订单详情</van-button>
+       <div style="height: 20px"></div>
+        <van-button type="default" size="large" to="/">回到首页</van-button>
     </div>
 </template>
 

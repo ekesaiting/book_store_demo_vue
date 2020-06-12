@@ -7,7 +7,8 @@ import AddressEdit from '../views/AddressEdit'
 import Detail from '../views/Detail'
 import Success from '../views/Success'
 import Info from '../views/Info'
-
+import OrderList from "../views/OrderList";
+import UserInfo from "../views/UserInfo";
 Vue.use(VueRouter)
 
   const routes = [
@@ -21,6 +22,16 @@ Vue.use(VueRouter)
     name: '地址列表',
     component: AddressList
   },
+    {
+      path: '/orderList',
+      name: '订单列表',
+      component: OrderList
+    },
+    {
+      path: '/userInfo',
+      name: '用户界面',
+      component: UserInfo
+    },
   {
     path: '/addressNew',
     name: '新增地址',

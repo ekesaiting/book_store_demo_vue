@@ -1,14 +1,11 @@
 <template>
     <div class="goods">
-
         <van-cell-group class="goods-cell-group">
-
             <van-cell>
                 <van-col span="16"><van-icon name="location-o" style="margin-right: 30px;" />收货人：{{data.buyerName}}</van-col>
                 <van-col>{{data.tel}}</van-col>
                 <van-col span="21" style="padding-left: 43px;font-size: 13px">收货地址：{{data.address}}</van-col>
             </van-cell>
-
         </van-cell-group>
 
         <van-card
@@ -44,7 +41,9 @@
                 :price="data.amount*100"
                 button-text="确认付款"
                 @submit="onSubmit"
-        />
+        >
+            <van-button round type="default" @click="cancel">取消订单</van-button>
+        </van-submit-bar>
     </div>
 </template>
 
@@ -60,7 +59,7 @@
         SwipeItem,
         GoodsAction,
         GoodsActionIcon,
-        GoodsActionButton
+        GoodsActionButton, Dialog
     } from 'vant';
     export default {
         components: {
@@ -103,7 +102,7 @@
             onSubmit:function () {
                 const _this = this
                 axios.put('http://localhost:8181/order/pay/'+this.$route.query.orderId).then(function (resp) {
-                    if(resp.data.code == 2003){
+                    if(resp.data.code === 2003){
                         let instance = Toast('订单'+resp.data.data.orderId+'支付成功');
                         setTimeout(() => {
                             instance.close();
@@ -111,6 +110,24 @@
                         }, 1000)
                     }
                 })
+            },
+            cancel(){
+                const _this = this;
+                Dialog.confirm({
+                    title: '取消订单',
+                    message: '是否要取消当前订单',
+                }).then(() => {
+                    axios.delete('http://localhost:8181/order/cancel/'+this.data.orderId).then(function (resp) {
+                        if (resp.data.code === 2002) {
+                            setTimeout(() => {
+                                _this.$router.push('/')
+                            }, 1000)
+                        }
+                    })
+                })
+                    .catch(() => {
+                        // on cancel
+                    });
             }
         }
     };

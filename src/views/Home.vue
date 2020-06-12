@@ -2,7 +2,7 @@
     <div>
         <van-row>
             <van-col span="24">
-                <van-tabs @click="onClick" sticky title-active-color="#E32DAB" color="#E32DAB" :line-width="100"
+                <van-tabs @click="selectTab" sticky title-active-color="#E32DAB" color="#E32DAB" :line-width="100"
                           :line-height="2">
 
                     <van-tab v-for="index in categories.length" :title="categories[index-1].name" class="tab">
@@ -50,7 +50,7 @@
                 </div>
             </template>
         </van-sku>
-
+            <tab-btn></tab-btn>
     </div>
 
 
@@ -58,12 +58,13 @@
 
 <script>
     import {
-        Toast,
+        //Toast,
         PullRefresh,
         Swipe,
-        SwipeItem
+        SwipeItem,
     } from 'vant';
-
+    import Api from '../api/api';
+    import tabBtn from "../components/tabBtn";
     export default {
         comments: {
             [PullRefresh.name]: PullRefresh,
@@ -72,11 +73,11 @@
         },
         data() {
             return {
-                categories: '',
-                books: '',
+                categories: [],
+                books: [],
                 show: true,
-                sku: '',
-                goods: ''
+                sku: {},
+                goods: {}
             }
         },
         created() {
@@ -87,16 +88,17 @@
             })
         },
         methods: {
-            onClick(index) {
-                const _this = this
-                axios.get('http://localhost:8181/book/getBookByCategoryType/' + this.categories[index].type).then(function (resp) {
-                    _this.books = resp.data.data
-                })
+            selectTab(index) {
+                const _this = this;
+                //"http://localhost:8181/book/getBookByCategoryType/"
+                    axios.get(Api.getBookByCategoryType + this.categories[index].type).then(function (resp) {
+                        _this.books = resp.data.data;
+                    })
             },
             buy(index){
                 this.show = true
                 const _this = this
-                axios.get('http://localhost:8181/book/getSpecsByBookId/' + this.books[index].id).then(function (resp) {
+                axios.get('http://localhost:8181/book/getSpecsByBookId/'+ this.books[index].id).then(function (resp) {
                     _this.goods = resp.data.data.goods
                     _this.sku = resp.data.data.sku
                 })
@@ -106,6 +108,9 @@
                 this.$store.state.quantity = item.selectedNum
                 this.$router.push('/addressList')
             }
+        },
+        components:{
+            tabBtn
         }
     }
 </script>
