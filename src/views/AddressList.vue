@@ -17,6 +17,7 @@
 
 <script>
     import { Dialog} from 'vant';
+    import common from "../components/common";
 
     export default {
         data() {
@@ -27,7 +28,7 @@
         },
         created() {
             const _this = this
-            axios.get('http://localhost:8181/address/list').then(function (resp) {
+            axios.get('http://localhost:8181/address/list/'+common.getUserId()).then(function (resp) {
                 _this.list = resp.data.data
             })
         },
@@ -36,6 +37,7 @@
                 this.$router.push('/addressNew')
             },
             onEdit(item) {
+                //得到深拷贝的原始数据对象。
                 let data = JSON.stringify(item)
                 this.$router.push({path: '/addressEdit', query: {item: data}})
             },
@@ -45,11 +47,12 @@
                     tel: item.tel,
                     address: item.address,
                     specsId: this.$store.state.specsId,
-                    quantity: this.$store.state.quantity
+                    quantity: this.$store.state.quantity,
+                    userId: common.getUserId()
                 }
                 const _this = this;
                 Dialog.confirm({
-                    title: '创建订单',
+                    title: '',
                     message: '使用当前信息创建订单',
                 }).then(() => {
                     console.log(orderForm);

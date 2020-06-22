@@ -28,7 +28,7 @@
 
         <van-cell-group class="goods-cell-group">
             <van-cell class="goods-express" style="font-weight: bold">
-                <van-col span="20">商品金额</van-col>
+                <van-col span="19">商品金额</van-col>
                 <van-col style="color: red">￥{{(data.amount-data.freight).toFixed(2)}}</van-col>
             </van-cell>
         </van-cell-group>
@@ -42,7 +42,7 @@
 
         <van-cell-group>
             <van-cell class="goods-cell-group" style="font-weight: bold">
-                <van-col span="20">合计</van-col>
+                <van-col span="19">合计</van-col>
                 <van-col style="color: red">￥{{data.amount}}</van-col>
             </van-cell>
         </van-cell-group>

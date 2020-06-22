@@ -25,7 +25,7 @@
 
         <van-cell-group class="goods-cell-group">
             <van-cell class="goods-express" style="font-weight: bold">
-                <van-col span="20">商品金额</van-col>
+                <van-col span="19">商品金额</van-col>
                 <van-col style="color: red">￥{{(data.amount-data.freight).toFixed(2)}}</van-col>
             </van-cell>
         </van-cell-group>
@@ -42,7 +42,7 @@
                 button-text="确认付款"
                 @submit="onSubmit"
         >
-            <van-button round type="default" @click="cancel">取消订单</van-button>
+            <van-button round size="small" type="default" @click="cancel">取消订单</van-button>
         </van-submit-bar>
     </div>
 </template>
@@ -114,8 +114,8 @@
             cancel(){
                 const _this = this;
                 Dialog.confirm({
-                    title: '取消订单',
-                    message: '是否要取消当前订单',
+                    title: '',
+                    message: '确定要取消当前订单',
                 }).then(() => {
                     axios.delete('http://localhost:8181/order/cancel/'+this.data.orderId).then(function (resp) {
                         if (resp.data.code === 2002) {

@@ -12,6 +12,7 @@
 <script>
     import AreaList from '../api/area';
     import { Toast } from 'vant';
+    import common from "../components/common";
     export default {
         name: "AddressEdit",
         created(){
@@ -29,6 +30,7 @@
         },
         methods: {
             onSave(item) {
+                item.userId=common.getUserId()
                 const _this = this
                 axios.put('http://localhost:8181/address/update',item).then(function (resp) {
                     if(resp.data.code === 2003){

@@ -10,6 +10,7 @@
 <script>
     import AreaList from '../api/area';
     import { Toast } from 'vant';
+    import common from "../components/common";
     export default {
         name: "AddressNew",
         data() {
@@ -19,6 +20,7 @@
         },
         methods: {
             onSave(item) {
+                item.userId=common.getUserId()
                 const _this = this
                 axios.post('http://localhost:8181/address/create',item).then(function (resp) {
                     if(resp.data.code == 2001){

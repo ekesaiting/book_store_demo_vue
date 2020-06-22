@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>这是订单列表</h1>
+        <h1>订单列表</h1>
             <van-card
                     v-for="order in orders"
                     :num="order.num"
@@ -28,6 +28,7 @@
 
 <script>
     import TabBtn from "../components/tabBtn";
+    import common from "../components/common";
     export default {
         name: "OrderList",
         data() {
@@ -52,7 +53,7 @@
             }
         },
         created() {
-            axios.get("http://localhost:8181/order/orderList").then(resp=>{
+            axios.get("http://localhost:8181/order/orderList/"+common.getUserId()).then(resp=>{
                 console.log(resp);
                 this.orders=resp.data.data
             })
